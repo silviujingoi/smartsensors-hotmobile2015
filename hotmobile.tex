@@ -1,0 +1,42 @@
+\documentclass[letterpaper,twocolumn,10pt]{sig-alternate-10pt}
+
+\usepackage{color, soul, epsfig, morefloats, graphicx, lipsum, pdfpages, multirow, endnotes, url, pgfplots}
+
+\usetikzlibrary{patterns}
+
+\graphicspath{ {./figures/} }
+
+
+\begin{document}
+\pagenumbering{arabic}
+\date{}
+
+
+%make title bold and 14 pt font (Latex default is non-bold, 16 pt)
+\title{\Large \bf The case for simple configurable classifiers for efficient continuous sensing on mobile devices}
+
+\author{
+{\rm Silviu Jingoi}\\
+University of Toronto
+\and
+{\rm Eyal de Lara}\\
+University of Toronto
+\and
+{\rm Ashvin Goel}\\
+University of Toronto
+} % end author
+
+\maketitle
+
+
+\input{abstract}
+\input{introduction}
+\input{background}
+\input{approach}
+\input{evaluation}
+\input{conclusion}
+
+\bibliographystyle{abbrv}
+\bibliography{hotmobile}
+
+\end{document}
