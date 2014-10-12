@@ -40,58 +40,55 @@
 	\\ \hline
 	\end{tabular}
 }
-\caption{Summary of advantages and disadvantages for various continuous sensing approaches}
+\caption{Advantages and disadvantages of existing continuous mobile sensing approaches}
 \label{table:sensingApproachesSummary}
 \end{table*}
 
 \section{Background}
 \label{sec:background}
 
-Mobile application developers can choose among several existing approaches when
-attempting to perform continuous sensing.  The availability of some of these
-approaches depends on the mobile device's hardware and operating system.
+This section overviews existing approaches for continuous mobile
+sensing.  The availability of some of these approaches depends on the
+mobile device's hardware and operating system.
+Table~\ref{table:sensingApproachesSummary} summarizes the main
+properties of the various approaches.
 
 \subsection{Always Awake}
 
 The basic approach for continuous sensing is to keep the mobile device
-\emph{always on}.  As an example, on the Android operating system, the sensing
-application acquires a wake lock to prevent the device from sleeping and
-registers a listener for a specific sensor.  Whenever the sensor produces a new
-reading, the operating system passes the reading to the application via a
-callback function.  This operation continues until the listener is unregistered
-or until the wake lock is released.  The benefit of this approach is that it
-achieves the highest possible accuracy because all the sensor data is delivered to the
-application.  However, the device cannot be placed in a sleeping state and hence, the power
+\emph{always on}.  As an example, on the Android operating system, the
+sensing application acquires a wake lock to prevent the device from
+sleeping and registers a listener for a specific sensor.  The benefit
+of this approach is that it achieves the highest possible accuracy
+because all the sensor data is delivered to the application.  However,
+the device cannot be placed in a sleeping state and hence, the power
 consumption of this approach is high.
 
 \subsection{Duty Cycling}
 
-To avoid keeping the device awake for extended periods of time, \emph{duty 
-cycling} allows a device to sleep for fixed, usually regular, periods of
-time.  An application on Android can implement duty cycling by scheduling a wake-up 
-alarm using the system's alarm service and by ensuring that it has not
-acquired a wake lock.  When no application has a wake lock, the operating system
-can power down the processor.  When the wake-up alarm fires, the processor wakes 
-up and notifies the application.  Next, the application collects sensor readings
-for a short period of time, and then reschedules another alarm.
+To avoid keeping the device awake for extended periods of time,
+\emph{duty cycling} allows a device to sleep for fixed, usually
+regular, periods of time.  An application on Android can implement
+duty cycling by scheduling a wake-up alarm using the system's alarm
+service and by ensuring that it has not acquired a wake lock.  When no
+application has a wake lock, the operating system can power down the
+processor.  When the wake-up alarm fires, the processor wakes up and
+notifies the application.  Next, the application collects sensor
+readings for a short period of time, and then reschedules another
+alarm.
 
-Duty cycling has several drawbacks.  While the device is sleeping, events of interest will not be 
-detected because the application does not receive any sensor data that were produced at those 
-times.  Additionally, during the short time periods when the device is awake and collecting 
-sensor readings, the events of interest might not occur.  These power transitions are wasteful 
-and expensive. 
-
-The basic duty
-cycling approach can be improved by dynamically adjusting the wake-up time.  When
-an application is woken up and detects an event of interest, it continues to
-collect sensor readings until events do not occur for some period, after which
-it returns to its regular duty cycling schedule.  This improves detection
-accuracy (e.g., event recall) but at the expense of increased energy
-consumption.  Unfortunately, finding a good balance between accuracy and power
-savings depends on the specific application and the user's behaviour.  Another
-drawback of this approach is that it does not scale well with multiple
-applications.  It is possible for mutually unaware applications to implement
-conflicting wake-up schedules, resulting in little or no sleep.
+Duty cycling has several drawbacks.  While the device is sleeping,
+events of interest will not be detected because the application does
+not receive any sensor data that were produced at those times.
+Additionally, during the short time periods when the device is awake
+and collecting sensor readings, the events of interest might not
+occur.  These power transitions are wasteful and expensive.
+Unfortunately, finding a good balance between accuracy and power
+savings depends on the specific application and the user's behaviour.
+Another drawback of this approach is that it does not scale well with
+multiple applications.  It is possible for mutually unaware
+applications to implement conflicting wake-up schedules, resulting in
+little or no sleep.
 
 \subsection{Sensor Data Batching}
 
