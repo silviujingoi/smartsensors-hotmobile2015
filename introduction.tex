@@ -30,10 +30,10 @@ To improve support for continuous sensing applications the research
 community has proposed the use of fully programmable heterogeneous
 architectures~\cite{reflex,littlerock,turducken}.  In these
 approaches, developers partition their applications to offload the
-initial stages of the application to a low-power processor
-(or a hierarchy of processors).  When the code running on the low
-power processor detects the occurrence of an event of interest, it
-proceeds to wake up the phone and passes control to the rest of the
+initial stages of the application to a low-power processor (or a
+hierarchy of processors).  When the code running on the low power
+processor detects the occurrence of an event of interest, it proceeds
+to wake up the phone and passes control to the rest of the
 application.  While the ability to run custom code on the low-power
 hardware provides great flexibility, the significant complexity
 inherent in this approach has so far prevented its adoption in
@@ -44,47 +44,42 @@ application developers to APIs that provide fixed functionality, by
 either batching sensor readings or recognizing a small number of
 predefined activities that can be used as wake-up
 conditions~\cite{androidMotionSensors,coreMotion,motox}.
+Unfortunately, batching is inefficient for applications that depend on
+infrequent events and is not appropriate for applications that require
+crisp response time.  Similarly, an activity recognition API provides
+little flexibility with no support for applications interested in
+events that are not covered by the set of predefined activities.
 
-In this paper we argue that these APIs are insufficient for supporting
-a rich and flexible set of continuous sensing applications.
-Batching is inefficient for applications that depend on infrequent
-events and is not appropriate for applications that require crisp
-response time.  An activity recognition API provides little
-flexibility with no support for applications interested in events that
-are not covered by the set of predefined activities.  
+This paper proposes {\em simple configurable classifiers}, a new
+approach for continuous mobile sensing that splits the work of
+energy-efficient event detection between the platform and the
+application developer.  In the new approach, the platform implements
+common sensor data pre-processing algorithms (e.g., noise reduction,
+feature extraction) that execute on a low-power sensor hub, and
+application developers construct {\em simple configurable classifiers}
+for events of interest by selecting among the set of pre-defined
+common pre-processing algorithms and tuning their parameters.  The
+{\em simple configurable classifiers} execute on the low-power sensor
+hub and, when events of interest are detected, the main processor is
+woken up and the rest of the application code is invoked.
+  
+We argue that {\em simple configurable classifiers} provide a better
+balance between flexibility and ease of deployment than existing
+approaches.  The approach empowers developers to create a broad set of
+event classifiers that can be used to detect a wide range of
+activities.  Simultaneously, these classifiers are significantly
+easier to program compared to fully programmable offloading.
+Moreover, since the pre-processing algorithms are pre-specified, their
+implementations can be optimized (by the device manufacturer) for each
+low-power processor, improving application portability between
+devices.  
 
-Instead, we argue that the sensing API should expose access to
-pre-processing algorithms on a low-power processor.  Data pre-processing includes data 
-cleaning, normalization, transformation, feature extraction and 
-selection, etc~\cite{kotsiantis2006data} \hl{Q: Previous sentence was copied word 
-for word from the paper's abstract. Is that ok? Need to format differently?}.  We propose an
-approach that enables programmers to create custom wake-up conditions
-by choosing among a set of predefined pre-processing algorithms, implemented 
-on the low-power processor, and tuning
-their parameters.  By providing developers with access to commonly used
-pre-processing algorithms (e.g., noise reduction, feature extraction), 
-as opposed to higher-level activity detectors, this approach provide a 
-better balance between flexibility and ease of
-deployment.  This access allows developers to create a broad set of
-simple event classifiers that can be used to detect a wide range of
-activities.  Simultaneously, they are significantly easier to program
-compared to fully programmable offloading.  Moreover, since the
-pre-processing algorithms are pre-specified, their implementations can be optimized (by
-the device manufacturer) for each low-power processor, improving
-application portability between devices.  Furthermore, it is possible
-to combine the pre-processing and wake-up operations when multiple applications
-register interest in the same set of events.  While simple classifiers could
-be programmed directly by individual applications, it is easy to
-imagine activity recognition libraries that take advantage of the
-functionality of our approach, to provide detection algorithms
-for a large number of activities.
-
-The rest of this paper is organized as follows.
-Section~\ref{sec:background} discusses existing approaches to
-continuous sensing and their limitations.  Section~\ref{sec:conjecture}
-proposes a conjecture, describes our new approach for continuous sensing and identifies
-some of its advantages and challenges.  Section~\ref{sec:validation} highlights the
-limitations of existing sensing approaches and provides
-some evidence that supports the proposed conjecture.  Finally, Section~\ref{sec:conclusion} 
-conclude the paper.
+The next section discusses existing approaches to continuous sensing
+and their limitations.  Section~\ref{sec:conjecture} introduces
+configurable simple classifiers as a new approach to supporting
+continuous mobile sensing.  This section also discusses the advantages
+and challenges of the new approach.  Section~\ref{sec:validation} uses
+trace-based simulation to illustrate the benefits of configurable
+simple classifiers for two accelerometer-based applications.  Finally,
+Section~\ref{sec:conclusion} conclude the paper.
 
