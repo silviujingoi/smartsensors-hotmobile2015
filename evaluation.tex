@@ -79,7 +79,7 @@ We evaluate the recall and precision of step and fall detection under the follow
 	(MotoX Step Detection, 1.0)
 	(MotoX Sig. Motion, 0.95)
 	(Simple Classifier, 1.0)};
-\addplot +[postaction={pattern=north west lines, pattern color=red!65}] coordinates {
+\addplot +[postaction={pattern=north west lines, pattern color=red!75}] coordinates {
 	(Duty Cycling 2 sec,0.476667) 
 	(Duty Cycling 5 sec,0.833333) 
 	(Duty Cycling 10 sec,1.111111) 
@@ -124,7 +124,7 @@ We evaluate the recall and precision of step and fall detection under the follow
 	(MotoX Step Detection,0.6667)
 	(MotoX Sig. Motion, 0.7778)
 	(Simple Classifier, 1)};
-\addplot +[postaction={pattern=north west lines, pattern color=red!65}] coordinates {
+\addplot +[postaction={pattern=north west lines, pattern color=red!75}] coordinates {
 	(Duty Cycling 2 sec,0.291545) 
 	(Duty Cycling 5 sec,0.510204) 
 	(Duty Cycling 10 sec,0.680272) 
@@ -143,7 +143,7 @@ We evaluate the recall and precision of step and fall detection under the follow
 \subsection{Simple classifiers}
 \label{sec:classifiers}
 
-We created {\em simple classifiers} for our step and fall detection applications. We assume the
+We created {\em simple configurable classifiers} for our step and fall detection applications. We assume the
 following simple algorithms are supported by the platform:
 
 \begin{itemize}
@@ -157,7 +157,7 @@ following simple algorithms are supported by the platform:
   
 \end{itemize}
 
-The {\em simple classifiers} are simplified versions of the detection algorithms implemented
+The {\em simple configurable classifiers} are simplified versions of the detection algorithms implemented
 by the applications.  The {\em step detection classifier} consists of an aggressive noise 
 reduction step, extraction of magnitude of the acceleration vectors and checking if the 
 acceleration magnitude exceed a threshold. The {\em fall detection classifier} comprises a 
@@ -183,7 +183,7 @@ collected this trace in a controlled environment which enabled us to
 annotate it with high quality ground truth data.
 
 The second trace is 2 hours and 50 minutes long and captures one of
-the author's morning routine (getting ready, having breakfast and
+the authors' morning routine (getting ready, having breakfast and
 commuting to work).  This trace was not annotated with ground truth
 information.  This trace is used to determine the feasibility of 
 significant motion events as a wake-up condition for events of
@@ -231,7 +231,7 @@ power consumption perspective.  The device would wake up too
 frequently, without actually detecting any events of interest.
 
 
-Using simple classifiers to wake up the device achieved perfect recall 
+Using simple configurable classifiers to wake up the device achieved perfect recall 
 for both step and fall detection, and 
 over 90\% of the sleep time of an ideal implementation.  The
 difference in sleep time between this approach and the ideal scenario 

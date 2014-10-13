@@ -8,7 +8,7 @@ on low-power hardware, and acts as an energy efficient wakeup
 mechanism for a higher complexity classifier that runs on the main CPU
 and provides both high recall and high precision.
 
-We conjecture: 1) that it is possible to implement simple classifiers for a 
+We conjecture: 1) that it is possible to implement simple configurable classifiers for a 
 wide range of applications by configuring a small set of common pre-processing 
 algorithms; and  2) that this approach will achieve comparable energy 
 savings to an alternative implementation that supports full programmability.
@@ -17,13 +17,13 @@ savings to an alternative implementation that supports full programmability.
 
 The platform implements common sensor data pre-processing algorithms that
 execute on a low-power sensor hub.  Applications construct 
-{\em  simple classifiers} for events of interest by selecting among the
+{\em  simple configurable classifiers} for events of interest by selecting among the
 set of pre-defined common pre-processing algorithms and tuning their
-parameters.  The {\em simple classifiers} execute on the
+parameters.  This classifier executes on the
 low-power sensor hub and, when events of interest are detected, the
 main processor is woken up and the application code is invoked.
   
-A {\em simple classifier} would be a series of data processing algorithms, 
+A {\em simple configurable classifier} would be a series of data processing algorithms, 
 where the output of one algorithms becomes the input to the next one, similar
 to a pipeline.  Common pre-processing algorithms that perform data cleaning, 
 filtering, feature extraction or admission control would be used as building 
@@ -58,7 +58,7 @@ The proposed approach has many benefits:
   pipelines by reusing existing command-line applications.
   
 
-{\bf Better predictability} It also
+{\bf Better predictability} It 
   creates predictable performance for the algorithms executed on the
   low-power processor. Profiling each algorithm will provide metrics
   about computational and time requirements, as well as power
@@ -73,7 +73,7 @@ The proposed approach has many benefits:
   cannot execute arbitrary code on the peripheral processor. 
 
 
-{\bf Improved Portability} The programmer do not have to be
+{\bf Improved Portability} Programmers do not have to be
   aware of the specifics of the underlying hardware, nor  create a version
   for every type of sensor hub. Since the algorithms are
   pre-specified, the device manufacturer can optimize their
@@ -112,7 +112,7 @@ specify what data they are interested in via the API.
 
 {\bf Configuring classifiers} We believe application developers may
 face challenges in selecting the optimal algorithms and configuration
-parameters for their {\em simple classifiers}. Given feedback from the
+parameters for their {\em simple configurable classifiers}. Given feedback from the
 application, self-learning mechanisms may be able to determine optimal
 configuration parameters for the algorithms used.  It is easy to 
 imagine an application notifying the
@@ -143,7 +143,10 @@ technique used for improving the accuracy of sensing application.
 Whether low power sensor hubs should include support for sensor
 fusion, however, is not clear.  On the one hand, such support could
 increase energy efficiency by reducing the occurrence of unnecessary
-wakeups.  On the other, sensor fusion tends to application specific
-and the added complexity may negate any energy benefits.
+wake-ups.  On the other, sensor fusion tends to application specific
+needs and the added complexity may negate any energy benefits.
+
+
+\vspace{10 mm}
 
 
