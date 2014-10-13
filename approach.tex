@@ -17,7 +17,7 @@ savings to an alternative implementation that supports full programmability.
 
 {\em Simple Configurable Classifiers} (SCC) is a new approach for
 continuous mobile sensing that divides the responsability of
-energy-efficient event detection mechanisms between the platform and
+energy-efficient event detection between the platform and
 the application developer.  The platform implements common sensor data
 pre-processing algorithms that execute on a low-power sensor hub.
 Applications construct simple classifiers for events of interest by
@@ -30,23 +30,12 @@ A simple classifier is assembled out of a series of data processing
 algorithms, where the output of one algorithms becomes the input to
 the next one, similar to a pipeline.  Common pre-processing algorithms
 that perform data cleaning, filtering, feature extraction or admission
-control would be used as building blocks for the pipeline.  In this
-context, data cleaning refers to noise reduction.  The Exponentially
-Weighted Moving Average filter is a very common algorithm used for
-noise reduction.  More accurate and complex noise reduction algorithms
-can be implemented using low-pass filters.  High-cut or low-cut
-filters can be used to reduce the amount of treble or bass in the
-audio data.  Low-pass, high-pass and band-pass filtering is also used
-in image processing for noise reduction, and edge detection.
-
-Feature extraction is a
-step present in almost all sensing applications.  Commonly extracted features 
-for accelerometer data include mean, standard deviation and energy, while
-applications working with audio data are often interested in features such as
-the Zero-Crossing Rate or Mel-frequency cepstral coefficients.  Admission 
-control is generally implemented by comparing one or more of the
-extracted features against thresholds.
-
+control would be used as building blocks for the pipeline.  While
+determining the set of algorithms to include as part of the platform
+is an open research questions that is beyond the scope of this paper,
+we anticipate that this set will include popular algorithms such as
+moving averages, low and high-pass filters, and Fast Fourier
+transform, among others.
 
 \subsection{Advantages}
 
