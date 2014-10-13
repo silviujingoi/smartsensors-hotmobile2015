@@ -50,20 +50,21 @@ crisp response time.  Similarly, an activity recognition API provides
 little flexibility with no support for applications interested in
 events that are not covered by the set of predefined activities.
 
-This paper proposes {\em simple configurable classifiers}, a new
+This paper proposes {\em Simple Configurable Classifiers} (SCC), a new
 approach for continuous mobile sensing that splits the work of
 energy-efficient event detection between the platform and the
 application developer.  In the new approach, the platform implements
 common sensor data pre-processing algorithms (e.g., noise reduction,
-feature extraction, admission control) that execute on a low-power sensor hub, and
-application developers construct {\em simple configurable classifiers}
-for events of interest by selecting among the set of pre-defined
-common pre-processing algorithms and tuning their parameters.  The
-{\em simple configurable classifiers} execute on the low-power sensor
-hub and, when events of interest are detected, the main processor is
-woken up and the rest of the application code is invoked.
+feature extraction, admission control) that execute on a low-power
+sensor hub, and application developers construct simple 
+classifiers for events of interest by selecting among the set of
+pre-defined common pre-processing algorithms and tuning their
+parameters.  The simple classifiers execute on the
+low-power sensor hub and, when events of interest are detected, the
+main processor is woken up and the rest of the application code is
+invoked.
   
-We argue that {\em simple configurable classifiers} provide a better
+We argue that SCC provide a better
 balance between flexibility and ease of deployment than existing
 approaches.  The approach empowers developers to create a broad set of
 event classifiers that can be used to detect a wide range of
@@ -75,11 +76,11 @@ low-power processor, improving application portability between
 devices.  
 
 The next section discusses existing approaches to continuous sensing
-and their limitations.  Section~\ref{sec:conjecture} introduces
-configurable simple classifiers as a new approach to supporting
-continuous mobile sensing.  This section also discusses the advantages
-and challenges of the new approach.  Section~\ref{sec:validation} uses
-trace-based simulation to illustrate the benefits of configurable
-simple classifiers for two accelerometer-based applications.  Finally,
+and their limitations.  Section~\ref{sec:conjecture} introduces SCC as
+a new approach to supporting continuous mobile sensing.  This section
+also discusses the advantages and challenges of the new approach.
+Section~\ref{sec:validation} uses trace-based simulation to illustrate
+the benefits of configurable simple classifiers for two
+accelerometer-based applications.  Finally,
 Section~\ref{sec:conclusion} conclude the paper.
 

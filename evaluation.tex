@@ -46,7 +46,7 @@ We evaluate the recall and precision of step and fall detection under the follow
 
 \item {\bf Moto X Significant Motion} The built-in significant motion detector is used to wake up the device and run the applications.
 
-\item {\bf Simple Classifier} We constructed simple event classifiers to wake up the device and run the event detection applications. A more detailed description of the 
+\item {\bf Simple Configurable Classifier} We constructed simple event classifiers to wake up the device and run the event detection applications. A more detailed description of the 
   classifiers is available in Section~\ref{sec:classifiers}.
   
 \end{itemize}
@@ -140,11 +140,12 @@ We evaluate the recall and precision of step and fall detection under the follow
 \label{table:fallDetectionRecallSleepTime}
 \end{figure}
 
-\subsection{Simple classifiers}
+\subsection{Simple Configurable Classifiers}
 \label{sec:classifiers}
 
-We created {\em simple configurable classifiers} for our step and fall detection applications. We assume the
-following simple algorithms are supported by the platform:
+We created simple classifiers for our step and fall detection
+applications. We assume the following simple algorithms are supported
+by the platform:
 
 \begin{itemize}
 
@@ -157,7 +158,7 @@ following simple algorithms are supported by the platform:
   
 \end{itemize}
 
-The {\em simple configurable classifiers} are simplified versions of the detection algorithms implemented
+The simple classifiers are simplified versions of the detection algorithms implemented
 by the applications.  The {\em step detection classifier} consists of an aggressive noise 
 reduction step, extraction of magnitude of the acceleration vectors and checking if the 
 acceleration magnitude exceed a threshold. The {\em fall detection classifier} comprises a 

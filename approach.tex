@@ -1,4 +1,4 @@
-\section{Configurable Simple Classifiers}
+\section{Simple Configurable Classifiers}
 \label{sec:conjecture}
 
 We argue that continuous mobile sensing applications should be
@@ -8,32 +8,36 @@ on low-power hardware, and acts as an energy efficient wakeup
 mechanism for a higher complexity classifier that runs on the main CPU
 and provides both high recall and high precision.
 
-We conjecture: 1) that it is possible to implement simple configurable classifiers for a 
+We conjecture: 1) that it is possible to implement simple classifiers for a 
 wide range of applications by configuring a small set of common pre-processing 
 algorithms; and  2) that this approach will achieve comparable energy 
 savings to an alternative implementation that supports full programmability.
 
 \subsection {Approach}
 
-The platform implements common sensor data pre-processing algorithms that
-execute on a low-power sensor hub.  Applications construct 
-{\em  simple configurable classifiers} for events of interest by selecting among the
-set of pre-defined common pre-processing algorithms and tuning their
-parameters.  This classifier executes on the
-low-power sensor hub and, when events of interest are detected, the
-main processor is woken up and the application code is invoked.
+{\em Simple Configurable Classifiers} (SCC) is a new approach for
+continuous mobile sensing that divides the responsability of
+energy-efficient event detection mechanisms between the platform and
+the application developer.  The platform implements common sensor data
+pre-processing algorithms that execute on a low-power sensor hub.
+Applications construct simple classifiers for events of interest by
+selecting among the set of pre-defined common pre-processing
+algorithms and tuning their parameters.  This classifier executes on
+the low-power sensor hub and, when events of interest are detected,
+the main processor is woken up and the application code is invoked.
   
-A {\em simple configurable classifier} would be a series of data processing algorithms, 
-where the output of one algorithms becomes the input to the next one, similar
-to a pipeline.  Common pre-processing algorithms that perform data cleaning, 
-filtering, feature extraction or admission control would be used as building 
-blocks for the pipeline.  In this context, data cleaning refers to noise 
-reduction.  The Exponentially Weighted Moving Average filter
-is a very common algorithm used for noise reduction.  More accurate and complex
-noise reduction algorithms can be implemented using low-pass filters.  High-cut
-or low-cut filters can be used to reduce the amount of treble or bass in the
-audio data.  Low-pass, high-pass and band-pass filtering is also used in image 
-processing for noise reduction, and edge detection.  
+A simple classifier is assembled out of a series of data processing
+algorithms, where the output of one algorithms becomes the input to
+the next one, similar to a pipeline.  Common pre-processing algorithms
+that perform data cleaning, filtering, feature extraction or admission
+control would be used as building blocks for the pipeline.  In this
+context, data cleaning refers to noise reduction.  The Exponentially
+Weighted Moving Average filter is a very common algorithm used for
+noise reduction.  More accurate and complex noise reduction algorithms
+can be implemented using low-pass filters.  High-cut or low-cut
+filters can be used to reduce the amount of treble or bass in the
+audio data.  Low-pass, high-pass and band-pass filtering is also used
+in image processing for noise reduction, and edge detection.
 
 Feature extraction is a
 step present in almost all sensing applications.  Commonly extracted features 
@@ -46,8 +50,7 @@ extracted features against thresholds.
 
 \subsection{Advantages}
 
-The proposed approach has many benefits:
-
+SCC has many benefits:
 
  {\bf Lower programming complexity}  Programming complexity is
   decreased because application developers can use the pre-defined
@@ -86,7 +89,7 @@ The proposed approach has many benefits:
 \label{sec:challenges}
 
 There are many challenges that will have to be resolved in order to
-make this approach possible:
+make SCC possible:
 
 {\bf Identifying pre-processing algorithms} Defining the appropriate
 set of algorithms that should be included in the API and executed on
@@ -112,7 +115,7 @@ specify what data they are interested in via the API.
 
 {\bf Configuring classifiers} We believe application developers may
 face challenges in selecting the optimal algorithms and configuration
-parameters for their {\em simple configurable classifiers}. Given feedback from the
+parameters for their simple classifiers. Given feedback from the
 application, self-learning mechanisms may be able to determine optimal
 configuration parameters for the algorithms used.  It is easy to 
 imagine an application notifying the
