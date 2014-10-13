@@ -7,10 +7,10 @@
 	enlargelimits=0.15,
 	legend style={at={(0.5,1.15)},anchor=north,legend columns=-1},
 	symbolic x coords={
-		Always Awake,
 		Duty Cycling 2 sec,
 		Duty Cycling 5 sec,
 		Duty Cycling 10 sec,
+		Batching 10 sec,
 		MotoX Step Detection,
 		MotoX Sig. Motion,
 		Simple Classifier},
@@ -20,22 +20,22 @@
 	nodes near coords align={vertical},
 ]
 \addplot coordinates {
-	(Always Awake,1.0) 
 	(Duty Cycling 2 sec,0.73) 
 	(Duty Cycling 5 sec,0.44) 
 	(Duty Cycling 10 sec,0.31)
+	(Batching 10 sec,1) 
 	(MotoX Step Detection, 1.0)
 	(MotoX Sig. Motion, 0.95)
 	(Simple Classifier, 1.0)};
-\addplot coordinates {
-	(Always Awake,0.0) 
+\addplot +[postaction={pattern=north west lines, pattern color=red!65}] coordinates {
 	(Duty Cycling 2 sec,0.476667) 
 	(Duty Cycling 5 sec,0.833333) 
 	(Duty Cycling 10 sec,1.111111) 
+	(Batching 10 sec,1.333333) 
 	(MotoX Step Detection, 0.683)
 	(MotoX Sig. Motion, 0.883333)
 	(Simple Classifier, 0.916667)};
-\draw [black, dashed] ({rel axis cs:0,0}|-{axis cs:Always Awake,1}) -- ({rel axis cs:1,0}|-{axis cs:Always Awake,1}) node [pos=0.33, above] {Oracle};
+\draw [black, dashed] ({rel axis cs:0,0}|-{axis cs:Simple Classifier,1}) -- ({rel axis cs:1,0}|-{axis cs:Simple Classifier,1}) node [pos=0.2, above] {Oracle};
 \legend{Recall,Sleep}
 \end{axis}
 \end{tikzpicture}
@@ -52,10 +52,10 @@
 	enlargelimits=0.15,
 	legend style={at={(0.5,1.15)},anchor=north,legend columns=-1},
 	symbolic x coords={
-		Always Awake,
 		Duty Cycling 2 sec,
 		Duty Cycling 5 sec,
 		Duty Cycling 10 sec,
+		Batching 10 sec,
 		MotoX Step Detection,
 		MotoX Sig. Motion,
 		Simple Classifier},
@@ -65,26 +65,26 @@
 	nodes near coords align={vertical},
 ]
 \addplot coordinates {
-	(Always Awake,1) 
 	(Duty Cycling 2 sec,0.7778) 
 	(Duty Cycling 5 sec,0.4444) 
 	(Duty Cycling 10 sec,0.3333) 
+	(Batching 10 sec,1) 
 	(MotoX Step Detection,0.6667)
 	(MotoX Sig. Motion, 0.7778)
 	(Simple Classifier, 1)};
-\addplot coordinates {
-	(Always Awake,0.0) 
+\addplot +[postaction={pattern=north west lines, pattern color=red!65}] coordinates {
 	(Duty Cycling 2 sec,0.291545) 
 	(Duty Cycling 5 sec,0.510204) 
 	(Duty Cycling 10 sec,0.680272) 
+	(Batching 10 sec,0.816327) 
 	(MotoX Step Detection, 0.418367)
 	(MotoX Sig. Motion, 0.540816)
 	(Simple Classifier, 1)};
-\draw [black, dashed] ({rel axis cs:0,0}|-{axis cs:Always Awake,1}) -- ({rel axis cs:1,0}|-{axis cs:Always Awake,1}) node [pos=0.33, above] {Oracle};
+\draw [black, dashed] ({rel axis cs:0,0}|-{axis cs:Simple Classifier,1}) -- ({rel axis cs:1,0}|-{axis cs:Simple Classifier,1}) node [pos=0.2, above] {Oracle};
 \legend{Recall,Sleep}
 \end{axis}
 \end{tikzpicture}
-\caption{Fall Detection {\em TODO please drop Always Awake from the graph and add results for batching.  Add some pattern to the bars so that they are readable even when printing in balck and white.  }}
+\caption{Fall Detection}
 \label{table:fallDetectionRecallSleepTime}
 \end{figure}
 
@@ -109,84 +109,142 @@ human subjects:
 \setlength{\itemsep}{-3pt}  
 
 \item A {\em Step Detector} based on the human step detection algorithm
-  proposed by Ryan Libby in~\cite{libbyFootstepDetection}. {\em TODO you need to say more about how this works.  Don't assume thst the reader is familiar with the reference}.
+  proposed by Ryan Libby in~\cite{libbyFootstepDetection}. The
+  application reduces noise in the sensor data by applying a low-pass 
+  filter, computes the magnitude of each acceleration vector and searches 
+  for local maxima in the acceleration magnitude values. Local maxima
+  in a particular acceleration range are detected as steps, given
+  that no other steps were detected within the last 200 milliseconds.
 
 \item A {\em Fall Detector} based on a simple thresholding algorithm,
-  as described in~\cite{kangasFallDetection}.  {\em TODO same as
-    previous comment}
+  as described in~\cite{kangasFallDetection}.  It checks for acceleration magnitude 
+  below a small threshold (representing free-fall), followed by a spike in acceleration magnitude 
+  above a different threshold (representing the moment of impact).
 
 \end{enumerate}
 
 \subsection{Configurations}
 
-We evaluate the recall and prevision of step and fall detection under the following configurations:
+We evaluate the recall and precision of step and fall detection under the following configurations:
 
 \begin{itemize}
 
-\item Duty Cycle {\em TODO add 1 sentence examplanation}
+\item {\bf Duty Cycling} The applications wake-up at fixed time intervals to collect sensor data for 5 seconds and run the event detection algorithms.
 
-\item Batching {\em TODO add 1 sentence examplanation}
+\item {\bf Batching} The applications wake-up at fixed time intervals to receive the batch of sensor data and run the event detection algorithms.
 
-\item MotoX Step Detections {\em TODO add examplanation that describes that we use the builtin step detector to wake up the device and then run the main app, be it step detection or fall detection.}
+\item {\bf Moto X Step Detection} The built-in step detector is used to wake up the device and run the applications, be it step detection or fall detection.
 
-\item MotoX Significant Motion {\em TODO add examplanation that describes that we use the builtin significant motion API to wake up the device and then run the main app, be it step detection or fall detection.}
+\item {\bf Moto X Significant Motion} The built-in significant motion detector is used to wake up the device and run the applications.
 
-\item Simple Classifier {\em TODO describe the algorithms that we assume are supported by the platform for each stage (noise-reduction, feature extraction, admission control).  Then briefly describe how we implemented two classifiers for the two apps by configuring this algorithms.} 
-
+\item {\bf Simple Classifier} We constructed simple event classifiers to wake up the device and run the event detection applications. A more detailed description of the 
+  classifiers is available in Section~\ref{sec:classifiers}.
+  
 \end{itemize}
+
+\subsection{Simple classifiers}
+\label{sec:classifiers}
+
+We created {\em simple classifiers} for our step and fall detection applications. We assume the
+following simple algorithms are supported by the platform:
+
+\begin{itemize}
+
+\item {\bf Data Cleaning} Noise-reduction algorithm based on exponential moving average with 
+  configurable degree of weighting decrease.
+
+\item {\bf Feature Extraction} Computation of magnitude of acceleration vector.
+
+\item {\bf Admission Control} Configurable high or low thresholds on values of extracted features.
+  
+\end{itemize}
+
+The {\em simple classifiers} are simplified versions of the detection algorithms implemented
+by the applications.  The {\em step detection classifier} consists of an aggressive noise 
+reduction step, extraction of magnitude of the acceleration vectors and checking if the 
+acceleration magnitude exceed a threshold. The {\em fall detection classifier} comprises a 
+moderate noise reduction step, extraction of magnitude of the acceleration vectors and testing
+if the acceleration magnitude falls below a threshold.
 
 \subsection{Traces}
 
 We collected two traces from human subjects using a Motorola Moto X
 device, running Android 4.4.4.  The smartphone ran an application that
 kept the device always awake and continuously recorded all raw
-accelerometer readings, as well as {\em step} and {\em significant
-  motion} events, which are supported natively by the Moto X.
+accelerometer readings as well as {\em step} and {\em significant motion} 
+events, which are supported natively by the Moto X.
 
 The first trace is 10 minutes long and consists of readings taken from
-a person walking, standing idle, falling to the groud, and performing
-other activities (e.g., seating down, standing up, taking the device
-out of the pocket). This trace was carefully engineered so that
+a person walking, standing idle, falling to the ground, and performing
+other activities (e.g., sitting down, standing up, taking the device
+out of the pocket).  This trace was carefully engineered so that
 walking and falling account for 40\% and 2\% of the trace,
 respectively.  This was done to allow us to evaluate the performance
-of applications that track frequent as well as unfrequent events.  We
+of applications that track frequent, as well as infrequent, events.  We
 collected this trace in a controlled environment which enabled us to
 annotate it with high quality ground truth data.
 
 The second trace is 2 hours and 50 minutes long and captures one of
 the author's morning routine (getting ready, having breakfast and
-commuting to work). This trace was not annotated with ground truth
-information, but enable evaluate the applications under more realistic
-conditions.
+commuting to work).  This trace was not annotated with ground truth
+information.  This trace is used to determine the feasibility of 
+significant motion events as a wake-up condition for events of
+interest that occur infrequently.
 
 \subsection{Results}
 
 Figures~\ref{table:footstepDetectionRecallSleepTime}
 and~\ref{table:fallDetectionRecallSleepTime} show the recall and
-achieved sleep time for step and fall detection for the 10 minutes
-long traces.  Results are normalized by the recall and sleep time of a
+achieved sleep time for step and fall detection for the ten-minute
+trace.  Results are normalized by the recall and sleep time of a
 hypothetical ideal implementation that only wakes up when an event of
 interest occurs.  The ideal implementation sleeps for 60\% and 98\% of
 the time for step detection and fall detection, respectively.
 
 As expected, Duty Cycling is effective at reducing the amount of time
 the device is awake (and thus, power consumption), but performs poorly
-in terms of event of interest recall.  Similarly, batching achieves
-good recall, but has poor sleep performance, specially for infrequent
-events, such as fall detection.
+in terms of event of interest recall.  Batching achieves
+good recall, but its sleep performance depends on the frequency of
+events of interest.  For infrequent events, such as fall
+detection, the batching approach generates a high number 
+of wake-ups that result in no events of interest being detected.
+
+Using the built-in step detector to wake up the device and run the step 
+and fall detection applications had predictable results, achieving high
+recall for step detection and moderate recall for fall detection. However,
+it caused numerous unnecessary wake-ups.  Upon inspection, we noticed that 
+falls and other events such as sitting, standing and taking the device 
+out of the pocket were incorrectly classified as steps.  The lack of 
+configuration options available in Android's sensor manager makes it 
+impossible to calibrate the built-in step detector for usage by specific 
+users.  This highlights the importance of personalizing wake-up
+conditions to the user.
+
+When using Android's built-in significant motion events as wake-up 
+conditions, the step and fall detection applications experienced high, but
+imperfect recall.  To determine the feasibility of significant motion events 
+as a wake-up condition for events of interest that occur infrequently, we 
+analysed the 2 hour and 50 minute long trace.  We assumed the event of 
+interest (e.g., falls) did not occur during the entire length of the 
+trace.  For this trace, the significant motion event fired, on average, 
+every 2.47 seconds.  Using the significant motion event as a wake-up 
+condition for infrequent events of interest would be very inefficient from a 
+power consumption perspective.  The device would wake up too
+frequently, without actually detecting any events of interest.
 
 
-{\em TODO discuss how motox step detection works for steps and falls.}
-
-{\em TODO discuss results of motox significant motion works for steps
-  and falls.  Also discuss performance for second trace.}
-
-
-{\em TODO present the results of simple classifier for both traces.
-  Also make the point that the performance of this approach is so good
-  that there is little additional benefit to be gained from general
-  programability.}
-
+Using simple classifiers to wake up the device achieved perfect recall 
+for both step and fall detection, and 
+over 90\% of the sleep time of an ideal implementation.  The
+difference in sleep time between this approach and the ideal scenario 
+provides an upper bound on the potential additional benefits of fully
+programmable code offloading.  We note that the classifiers we constructed 
+are optimized for the person performing the actions.  Therefore, the
+results for this approach might be too optimistic.  Simulations on traces 
+collected from other users are likely to show a decrease in precision or 
+recall.  However, this approach allows applications to personalize their 
+wake-up condition to their user by adjusting the configuration parameters 
+of the algorithms used to build the classifiers.
 
 
 
