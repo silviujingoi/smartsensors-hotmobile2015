@@ -8,27 +8,40 @@ on low-power hardware, and acts as an energy efficient wakeup
 mechanism for a higher complexity classifier that runs on the main CPU
 and provides both high recall and high precision.
 
-We conjecture: 1) that is possible to implement simple classifiers for a 
+We conjecture: 1) that it is possible to implement simple classifiers for a 
 wide range of applications by configuring a small set of common pre-processing 
 algorithms; and  2) that this approach will achieve comparable energy 
-savings to an alternative implementation that support full programmability.
+savings to an alternative implementation that supports full programmability.
 
 \subsection {Approach}
 
-Platform implements common sensor data pre-processing algorithms that
-execute on a low-power sensor hub.  Applications construct {\em
-  simple classifiers} for events of interest by selecting among the
+The platform implements common sensor data pre-processing algorithms that
+execute on a low-power sensor hub.  Applications construct 
+{\em  simple classifiers} for events of interest by selecting among the
 set of pre-defined common pre-processing algorithms and tuning their
 parameters.  The {\em simple classifiers} execute on the
 low-power sensor hub and, when events of interest are detected, the
 main processor is woken up and the application code is invoked.
+  
+A {\em simple classifier} would be a series of data processing algorithms, 
+where the output of one algorithms becomes the input to the next one, similar
+to a pipeline.  Common pre-processing algorithms that perform data cleaning, 
+filtering, feature extraction or admission control would be used as building 
+blocks for the pipeline.  In this context, data cleaning refers to noise 
+reduction.  The Exponentially Weighted Moving Average filter
+is a very common algorithm used for noise reduction.  More accurate and complex
+noise reduction algorithms can be implemented using low-pass filters.  High-cut
+or low-cut filters can be used to reduce the amount of treble or bass in the
+audio data.  Low-pass, high-pass and band-pass filtering is also used in image 
+processing for noise reduction, and edge detection.  
 
-{\em TODO We need to go into more detail about what constitutes a {\em
-    simple classifier}.  Specifically, talk about how classifiers are
-  build as pipelines that compose algorithms that perform data
-  cleaning, feature extraction and admission control.  For each stage
-  give examples of common algorithms that could be used.}
-
+Feature extraction is a
+step present in almost all sensing applications.  Commonly extracted features 
+for accelerometer data include mean, standard deviation and energy, while
+applications working with audio data are often interested in features such as
+the Zero-Crossing Rate or Mel-frequency cepstral coefficients.  Admission 
+control is generally implemented by comparing one or more of the
+extracted features against thresholds.
 
 
 \subsection{Advantages}
@@ -38,7 +51,11 @@ The proposed approach has many benefits:
 
  {\bf Lower programming complexity}  Programming complexity is
   decreased because application developers can use the pre-defined
-  pre-processing algorithms, rather than implementing them themselves. {\em TODO talk about how all that the programmer needs to do is configure a chair by selecting algorithms and setting parameters, not unlike how sell programming build complex pipelines by reusing existing command-line apps.}
+  pre-processing algorithms, rather than implementing them themselves. 
+  Application developers need to select appropriate pre-processing 
+  algorithms for their pipelines and configure their parameters. This 
+  is not unlike how shell programming is used to build complex 
+  pipelines by reusing existing command-line applications.
   
 
 {\bf Better predictability} It also
