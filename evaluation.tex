@@ -220,11 +220,14 @@ impossible to calibrate the built-in step detector for usage by specific
 users.  This highlights the importance of personalizing wake-up
 conditions to the user.
 
-When using Android's built-in significant motion events as wake-up 
-conditions, the step and fall detection applications experienced high, but
-imperfect recall.  To determine the feasibility of significant motion events 
+When using Android's built-in significant motion events as wake-up
+conditions, the step and fall detection applications experienced high,
+but imperfect recall.  In addition, for fall detection the device
+manages to leverage only half of the available sleep time.
+
+To determine the feasibility of significant motion events 
 as a wake-up condition for events of interest that occur infrequently, we 
-analysed the 2 hour and 50 minute long trace.  We assumed the event of 
+analyzed the 2 hour and 50 minute long trace.  We assumed the event of 
 interest (e.g., falls) did not occur during the entire length of the 
 trace.  For this trace, the significant motion event fired, on average, 
 every 2.47 seconds.  Using the significant motion event as a wake-up 
@@ -232,19 +235,18 @@ condition for infrequent events of interest would be very inefficient from a
 power consumption perspective.  The device would wake up too
 frequently, without actually detecting any events of interest.
 
-
-Using simple configurable classifiers to wake up the device achieved perfect recall 
-for both step and fall detection, and 
-over 90\% of the sleep time of an ideal implementation.  The
-difference in sleep time between this approach and the ideal scenario 
-provides an upper bound on the potential additional benefits of fully
-programmable code offloading.  We note that the classifiers we constructed 
-are optimized for the person performing the actions.  Therefore, the
-results for this approach might be too optimistic.  Simulations on traces 
-collected from other users are likely to show a decrease in precision or 
-recall.  However, this approach allows applications to personalize their 
-wake-up condition to their user by adjusting the configuration parameters 
-of the algorithms used to build the classifiers.
+Using simple classifiers to wake up the device achieved perfect recall
+for both step and fall detection, and over 90\% of the sleep time of
+an ideal implementation.  The difference in sleep time between this
+approach and the ideal scenario provides an upper bound on the
+potential additional benefits of fully programmable code offloading.
+We note that the classifiers we constructed are optimized for the
+person performing the actions.  Therefore, the results for this
+approach might be too optimistic.  Simulations on traces collected
+from other users are likely to show a decrease in precision or recall.
+However, this approach allows applications to personalize their
+wake-up condition to their user by adjusting the configuration
+parameters of the algorithms used to build the classifiers.
 
 
 
