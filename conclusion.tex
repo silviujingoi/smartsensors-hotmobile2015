@@ -1,8 +1,16 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-\hl{TODO: most of this needs to be changed}
+In this paper we proposed {\em configurable simple classifiers}, a new
+approach for continuous mobile sensing.  In this approach, the platform implements
+common sensor data pre-processing algorithms that execute on a low-power sensor hub, and
+application developers construct {\em simple configurable classifiers}
+for events of interest by selecting among the set of pre-defined
+common pre-processing algorithms and tuning their parameters.  We presented
+preliminary results showing the performance of using two {\em configurable 
+simple classifiers} as wake-up mechanisms the for two accelerometer-based applications.
 
-In this paper we proposed Smartsensors, an approach that uses a low-power processor to perform sensor data acquisition and wakes up the main processor when an event of interest occurs. The API provided to developers hides the heterogeneous nature of the system, ensuring application development does not increase in complexity. The use of an API also allows Smartsensor-based mobile applications to be portable to other Smartsensor-enabled devices.
-
-Our immediate future work includes developing Smartsensors based on other sensors available on mobile devices, such as the microphone, camera or location sensor. We believe application developers may face challenges in selecting the optimal data filter and wake-up parameters for their application. We plan on creating self-learning algorithms that, given feedback from the application about events of interest, will be able to determine the optimal data filter and wake-up parameters. Additionally, we will be exploring possible optimizations for scenarios where multiple applications are interested in similar sensor data. We are also interested in using sensor fusion to create even ``smarter'' sensors that enable the development of context-awake mobile applications.
+Our immediate future work includes developing a prototype board and 
+performing a comprehensive evaluation of {\em configurable simple 
+classifiers} for multiple sensors and applications. Further future work 
+aims at tackling some of the challenges described in Section~\ref{sec:challenges}.  
