@@ -1,3 +1,55 @@
+\section{Evaluation}
+\label{sec:validation}
+
+Defining the set of algorithms that should be implemented by the
+platform and defining the API is beyond the scope of this position
+paper.  Instead, this section provides evidence to support our
+conjecture.  We use trace-based simulation to evaluate the performance
+of two simple classifiers built using common pre-processing algorithms
+for two accelerometer-based applications.
+
+
+\subsection{Applications}
+
+We developed two applications that detect activities performed by 
+human subjects:
+
+\begin{enumerate}
+\setlength{\itemsep}{-3pt}  
+
+\item A {\em Step Detector} based on the human step detection algorithm
+  proposed by Ryan Libby in~\cite{libbyFootstepDetection}. The
+  application reduces noise in the sensor data by applying a low-pass 
+  filter, computes the magnitude of each acceleration vector and searches 
+  for local maxima in the acceleration magnitude values. Local maxima
+  in a particular acceleration range are detected as steps, given
+  that no other steps were detected within the last 200 milliseconds.
+
+\item A {\em Fall Detector} based on a simple thresholding algorithm,
+  as described in~\cite{kangasFallDetection}.  It checks for acceleration magnitude 
+  below a small threshold (representing free-fall), followed by a spike in acceleration magnitude 
+  above a different threshold (representing the moment of impact).
+
+\end{enumerate}
+
+\subsection{Configurations}
+
+We evaluate the recall and precision of step and fall detection under the following configurations:
+
+\begin{itemize}
+
+\item {\bf Duty Cycling} The applications wake-up at fixed time intervals to collect sensor data for 5 seconds and run the event detection algorithms.
+
+\item {\bf Batching} The applications wake-up at fixed time intervals to receive the batch of sensor data and run the event detection algorithms.
+
+\item {\bf Moto X Step Detection} The built-in step detector is used to wake up the device and run the applications, be it step detection or fall detection.
+
+\item {\bf Moto X Significant Motion} The built-in significant motion detector is used to wake up the device and run the applications.
+
+\item {\bf Simple Classifier} We constructed simple event classifiers to wake up the device and run the event detection applications. A more detailed description of the 
+  classifiers is available in Section~\ref{sec:classifiers}.
+  
+\end{itemize}
 
 \begin{figure}[t]
 \centering
@@ -87,60 +139,6 @@
 \caption{Fall Detection}
 \label{table:fallDetectionRecallSleepTime}
 \end{figure}
-
-
-\section{Evaluation}
-\label{sec:validation}
-
-Defining the set of algorithms that should be implemented by the
-platform and defining the API is beyond the scope of this position
-paper.  Instead, this section provides evidence to support our
-conjecture.  We use trace-based simulation to evaluate the performance
-of two simple classifiers built using common pre-processing algorithms
-for two accelerometer-based applications.
-
-
-\subsection{Applications}
-
-We developed two applications that detect activities performed by 
-human subjects:
-
-\begin{enumerate}
-\setlength{\itemsep}{-3pt}  
-
-\item A {\em Step Detector} based on the human step detection algorithm
-  proposed by Ryan Libby in~\cite{libbyFootstepDetection}. The
-  application reduces noise in the sensor data by applying a low-pass 
-  filter, computes the magnitude of each acceleration vector and searches 
-  for local maxima in the acceleration magnitude values. Local maxima
-  in a particular acceleration range are detected as steps, given
-  that no other steps were detected within the last 200 milliseconds.
-
-\item A {\em Fall Detector} based on a simple thresholding algorithm,
-  as described in~\cite{kangasFallDetection}.  It checks for acceleration magnitude 
-  below a small threshold (representing free-fall), followed by a spike in acceleration magnitude 
-  above a different threshold (representing the moment of impact).
-
-\end{enumerate}
-
-\subsection{Configurations}
-
-We evaluate the recall and precision of step and fall detection under the following configurations:
-
-\begin{itemize}
-
-\item {\bf Duty Cycling} The applications wake-up at fixed time intervals to collect sensor data for 5 seconds and run the event detection algorithms.
-
-\item {\bf Batching} The applications wake-up at fixed time intervals to receive the batch of sensor data and run the event detection algorithms.
-
-\item {\bf Moto X Step Detection} The built-in step detector is used to wake up the device and run the applications, be it step detection or fall detection.
-
-\item {\bf Moto X Significant Motion} The built-in significant motion detector is used to wake up the device and run the applications.
-
-\item {\bf Simple Classifier} We constructed simple event classifiers to wake up the device and run the event detection applications. A more detailed description of the 
-  classifiers is available in Section~\ref{sec:classifiers}.
-  
-\end{itemize}
 
 \subsection{Simple classifiers}
 \label{sec:classifiers}
